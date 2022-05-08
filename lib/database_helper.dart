@@ -47,7 +47,9 @@ class DatabaseHelper {
 
     for (var word in capitals) {
       await insert(word);
+
     }
+
   }
 
   Future<Word> insert(Word word) async {
