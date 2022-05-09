@@ -1,5 +1,5 @@
 
-import 'dart:io';
+
 
 import 'package:flutter/material.dart';
 import 'package:my_dictionary/models/my_webview.dart';
@@ -27,7 +27,7 @@ class _WordItemState extends State<WordItem> {
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           child: Row(
             children: [
-              Container(
+              SizedBox(
 
 
                 width: 60,
@@ -56,6 +56,6 @@ class _WordItemState extends State<WordItem> {
       }
     }
     return word2;
-    print(word2);
+
   }
 }
