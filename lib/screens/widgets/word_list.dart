@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:my_dictionary/database_helper.dart';
 import 'package:my_dictionary/models/main_provider.dart';
 import 'package:my_dictionary/screens/widgets/word_item.dart';
+import 'package:my_dictionary/utils/constants.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class WordList extends StatefulWidget {
@@ -16,10 +18,21 @@ class _WordListState extends State<WordList> {
   String searchQuery = "";
 
   TextEditingController myController = TextEditingController();
+
+
   @override
   void initState() {
     super.initState();
-    DatabaseHelper.instance.loadDB(context);
+  loadDB();
+  }
+
+ Future<void> loadDB()async{
+    SharedPreferences prefs= await SharedPreferences.getInstance();
+    bool? isLoaded=prefs.getBool(Constants.IS_DATABASE_INIT)??false;
+
+    if(!isLoaded){
+      DatabaseHelper.instance.loadDB(context);
+    }
   }
 
   @override

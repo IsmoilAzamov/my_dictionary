@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/widgets.dart';
+import 'package:my_dictionary/utils/constants.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:my_dictionary/models/word.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
@@ -49,6 +51,13 @@ class DatabaseHelper {
       await insert(word);
 
     }
+    saveState();
+  }
+
+
+  Future<void> saveState()async{
+    SharedPreferences prefs =await SharedPreferences.getInstance();
+    await prefs.setBool(Constants.IS_DATABASE_INIT, true);
 
   }
 
@@ -105,5 +114,6 @@ class DatabaseHelper {
     });
     return words;
   }
+
 
 }
