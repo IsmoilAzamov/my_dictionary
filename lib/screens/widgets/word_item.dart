@@ -8,12 +8,18 @@ class WordItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        children: [
-          Text(word.country??"...".toString(), style: const TextStyle(fontSize: 24),),
-          const Divider(thickness: 2, color: Colors.black26,),
-        ],
+    return Card(
+      elevation: 8,
+      margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+        child: Row(
+          children: [
+            Expanded(child: Text(word.country??"...", style: const TextStyle(fontSize: 24, color: Colors.black), )),
+            const Divider(thickness: 2,color: Colors.black26,),
+
+          ],
+        ),
       ),
     );
   }

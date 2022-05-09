@@ -4,11 +4,6 @@ import 'package:my_dictionary/models/main_provider.dart';
 import 'package:my_dictionary/screens/widgets/word_item.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/word.dart';
-
-
-
-
 
 class WordList extends StatefulWidget {
   const WordList({Key? key}) : super(key: key);
@@ -18,38 +13,80 @@ class WordList extends StatefulWidget {
 }
 
 class _WordListState extends State<WordList> {
+  String searchQuery = "";
 
+  TextEditingController myController = TextEditingController();
   @override
   void initState() {
-
     super.initState();
+    DatabaseHelper.instance.loadDB(context);
   }
 
   @override
- Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height*0.3,
-      child: Consumer<MainProvider>(builder: (context, data, child){
-        return FutureBuilder(
-        future: DatabaseHelper.instance.getWords(),
-      builder:
-      (BuildContext context, AsyncSnapshot<List<Word>> snapshot){
-          if(!snapshot.hasData){
-            return const Center(child: Text("No Data Found", style: TextStyle(fontSize: 24),),);
-          }
+  Widget build(BuildContext context) {
+  if(searchQuery.isEmpty){
+    updateQuery();
+  }
+    return Scaffold(
+      appBar: AppBar(
+        title: TextField(
+          onChanged: (myController){
+            setState(() {
+              updateQuery(word: myController.toString());
+              searchQuery=myController.toString();
+            });
+          },
+          autofocus: true,
+          controller: myController,
+          decoration: InputDecoration(
+            hintText: " Search...",
+            border: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            focusColor: Colors.black,
+            suffixIcon: IconButton(
+                onPressed: () {
+                  clearSearchBar();
+                },
+                icon: const Icon(Icons.clear)),
+          ),
+          style: const TextStyle(
+              color: Colors.black,
+              fontSize: 18.0,
+              decorationStyle: TextDecorationStyle.dotted,
+              decorationColor: Colors.white),
+        ),
+        iconTheme: const IconThemeData(
+            color: Color.fromRGBO(9, 133, 46, 100), size: 36),
+        backgroundColor: Colors.white,
+      ),
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.9,
+        child: Consumer<MainProvider>(builder: (context, data, child) {
           return ListView.builder(
-          padding: const EdgeInsets.only(bottom: 10),
-      itemBuilder: (context, index){
-            return WordItem(snapshot.data![index]);
-      },
-      itemCount: snapshot.data?.length ?? 0,
-      );
-      },
-        );
-      }),
+              padding: const EdgeInsets.only(bottom: 10),
+              itemBuilder: (context, index) {
+                return WordItem(data.words[index]);
+              },
+              itemCount: data.words.length);
+        }),
+      ),
     );
   }
 
+  updateQuery({String? word}) {
+    setState(() {
+      final mainProvider = Provider.of<MainProvider>(context, listen: false);
+
+      mainProvider.initList(word: word);
+    });
+  }
 
 
+
+  clearSearchBar() {
+
+
+    myController.clear();
+    updateQuery();
+  }
 }

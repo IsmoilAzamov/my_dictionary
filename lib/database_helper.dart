@@ -19,7 +19,7 @@ class DatabaseHelper {
   final String colCountry = 'country';
 
   Future<Database?> get db async {
-    return _db ?? await _initDB();
+    return _db ?? await  _initDB();
   }
 
   Future<Database?> _initDB() async {
@@ -105,4 +105,5 @@ class DatabaseHelper {
     });
     return words;
   }
+
 }
