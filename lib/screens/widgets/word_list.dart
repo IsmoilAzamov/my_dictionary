@@ -31,17 +31,16 @@ class _WordListState extends State<WordList> {
     bool? isLoaded=prefs.getBool(Constants.IS_DATABASE_INIT)??false;
 
     if(!isLoaded){
-      DatabaseHelper.instance.loadDB(context);
+     await DatabaseHelper.instance.loadDB(context);
     }
+    updateQuery();
   }
 
   @override
   Widget build(BuildContext context) {
-  if(searchQuery.isEmpty){
-    updateQuery();
-  }
+
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(elevation: 8,
         title: TextField(
           onChanged: (myController){
             setState(() {
@@ -63,20 +62,20 @@ class _WordListState extends State<WordList> {
                 icon: const Icon(Icons.clear)),
           ),
           style: const TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontSize: 18.0,
               decorationStyle: TextDecorationStyle.dotted,
-              decorationColor: Colors.white),
+              decorationColor: Colors.black26),
         ),
         iconTheme: const IconThemeData(
             color: Color.fromRGBO(9, 133, 46, 100), size: 36),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black26,
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height * 0.9,
         child: Consumer<MainProvider>(builder: (context, data, child) {
           return ListView.builder(
-              padding: const EdgeInsets.only(bottom: 10),
+              //padding: const EdgeInsets.only(bottom: 10),
               itemBuilder: (context, index) {
                 return WordItem(data.words[index]);
               },

@@ -1,14 +1,14 @@
 class Word {
   int? id;
-  String? city;
-  String? country;
+  String? desc;
+  String? job;
 
-  Word(this.city, this.country);
+  Word(this.desc, this.job);
 
   Map<String, Object?> toMap() {
     var map = <String, Object?>{
-      "city": city,
-      "country": country,
+      "desc": desc,
+      "job": job,
     };
     if (id != null) {
       map["id"] = id;
@@ -18,13 +18,13 @@ class Word {
 
   Word.fromMap(Map<String, Object?> map) {
     id = (map["id"] as int?)!;
-    city = (map["city"] as String?)!;
-    country = (map["country"] as String?)!;
+    desc = (map["desc"] as String?)!;
+    job = (map["job"] as String?)!;
   }
 
   Word.fromJson(Map<String, dynamic> json) {
     // id = json['id'];
-    city = json['city'];
-    country = json['country'];
+    desc = json['desc'];
+    job = json['job'];
   }
 }

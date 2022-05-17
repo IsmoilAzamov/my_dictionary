@@ -1,9 +1,6 @@
-
-
-
 import 'package:flutter/material.dart';
-import 'package:my_dictionary/models/my_webview.dart';
 import 'package:my_dictionary/models/word.dart';
+
 
 
 class WordItem extends StatefulWidget {
@@ -18,27 +15,37 @@ class _WordItemState extends State<WordItem> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>WebViewExample(name: wordCompleter(widget.word.country??'Uzbekistan'))));},
-      child: Card(
-        elevation: 8,
-        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-          child: Row(
-            children: [
-              SizedBox(
+    return SafeArea(
+      child: InkWell(
+        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>  SafeArea(
+          child: Scaffold(body: Container(
+              margin: const EdgeInsets.only(right: 12, left: 12, top: 78),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+               Text(widget.word.job??"...", textAlign: TextAlign.center, style: const TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold), ),
+                  const SizedBox(height: 20,),
+                  Text("${widget.word.desc}", style: const TextStyle(fontSize: 18),),
+                ],
+              )))
+        )));},
+        child: Card(
+          elevation: 8,
+          margin: const EdgeInsets.symmetric(vertical: 1, horizontal: 5),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            child: Row(
+              children: [
 
+                const SizedBox(width: 12,),
+                Expanded(child: Text(widget.word.job??"...",  style: const TextStyle(fontSize: 24, color: Colors.white), )),
+                const Divider(thickness: 2,color: Colors.black26,),
+                const Icon(Icons.chevron_right_sharp, size: 29, color: Colors.white30,)
 
-                width: 60,
-                height: 40,
-                child: Image.network('https://www.countries-ofthe-world.com/flags-normal/flag-of-${wordCompleter(widget.word.country??'Uzbekistan')}.png'),
-              ),
-              const SizedBox(width: 12,),
-              Expanded(child: Text(widget.word.country??"...", style: const TextStyle(fontSize: 24, color: Colors.black), )),
-              const Divider(thickness: 2,color: Colors.black26,),
-
-            ],
+              ],
+            ),
           ),
         ),
       ),

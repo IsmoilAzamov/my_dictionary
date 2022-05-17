@@ -15,10 +15,10 @@ class DatabaseHelper {
 
   DatabaseHelper._instance();
 
-  final String tableName = "capitals";
+  final String tableName = "desc";
   final String colId = 'id';
-  final String colCity = 'city';
-  final String colCountry = 'country';
+  final String colCity = 'desc';
+  final String colCountry = 'job';
 
   Future<Database?> get db async {
     return _db ?? await  _initDB();
@@ -26,7 +26,7 @@ class DatabaseHelper {
 
   Future<Database?> _initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    String path = documentsDirectory.path + "capitals.db";
+    String path = documentsDirectory.path + "alljobs.db";
     _db = await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
           await db.execute("CREATE TABLE $tableName ("
@@ -38,16 +38,16 @@ class DatabaseHelper {
     return _db;
   }
 
-  void loadDB(context) async {
+  Future<void> loadDB(context) async {
     String data =
-    await DefaultAssetBundle.of(context).loadString("assets/capitals.json");
+    await DefaultAssetBundle.of(context).loadString("assets/alljobs.json");
     final jsonResult = jsonDecode(data);
 
-    List<Word> capitals = jsonResult.map<Word>((data) {
+    List<Word> alljobs = jsonResult.map<Word>((data) {
       return Word.fromJson(data);
     }).toList();
 
-    for (var word in capitals) {
+    for (var word in alljobs) {
       await insert(word);
 
     }

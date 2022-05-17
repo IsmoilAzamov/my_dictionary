@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uz.azamof.my_dictionary">
    <application
-        android:label="my_dictionary"
+        android:label="All Jobs List"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
